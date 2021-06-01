@@ -22,7 +22,7 @@ class MovieFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->words(rand(1, 5), true),
+            'title' => ucfirst($this->faker->words(rand(1, 5), true)),
             'director' => $this->faker->name(),
             'imageUrl' => $this->faker->url(),
             'duration' => $this->faker->numberBetween(75, 200),
