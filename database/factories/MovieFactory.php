@@ -24,10 +24,10 @@ class MovieFactory extends Factory
         return [
             'title' => ucfirst($this->faker->words(rand(1, 5), true)),
             'director' => $this->faker->name(),
-            'imageUrl' => $this->faker->url(),
-            'duration' => $this->faker->numberBetween(75, 200),
+            'imageUrl' => "https://blackmantkd.com/wp-content/uploads/2017/04/default-image-620x600.jpg",
+            'duration' => $this->faker->numberBetween(60, 300),
             'releaseDate' => $this->faker->date(),
-            'genre' =>  $this->faker->word()
+            'genre' =>  ucfirst($this->faker->word())
         ];
     }
 }
