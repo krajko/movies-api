@@ -24,11 +24,11 @@ class UpdateMovieRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => "sometimes|unique:movies",
+            'title' => "unique:movies",
             'director' => "sometimes",
             'imageUrl' => "regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/",
-            'duration' => "sometimes",
-            'releaseDate' => "sometimes|unique:movies",
+            'duration' => "min:1|max:500",
+            'releaseDate' => "unique:movies",
             'genre' => "sometimes"
         ];
     }

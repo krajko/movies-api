@@ -27,7 +27,7 @@ class CreateMovieRequest extends FormRequest
             'title' => "required|unique:movies",
             'director' => "required",
             'imageUrl' => "regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/",
-            'duration' => "required",
+            'duration' => "required|min:1|max:500",
             'releaseDate' => "required|unique:movies",
             'genre' => "required"
         ];
