@@ -24,7 +24,7 @@ class MovieFactory extends Factory
         return [
             'title' => ucfirst($this->faker->words(rand(1, 5), true)),
             'director' => $this->faker->name(),
-            'imageUrl' => "https://blackmantkd.com/wp-content/uploads/2017/04/default-image-620x600.jpg",
+            'imageUrl' => "https://blog.hubspot.com/hubfs/Sales_Blog/famous-movie-quotes.jpg",
             'duration' => $this->faker->numberBetween(60, 300),
             'releaseDate' => $this->faker->date(),
             'genre' =>  ucfirst($this->faker->word())
