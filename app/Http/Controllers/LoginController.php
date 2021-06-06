@@ -12,8 +12,6 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    // protected $redirectTo = '/';
-
     public function authenticate(Request $request) {
         $credentials  = $request->only(['email', 'password']);
 
@@ -26,9 +24,5 @@ class LoginController extends Controller
         }
 
         return response()->json(compact('token'));
-    }
-
-    public function getUser($id) {
-        return User::findOrFail($id);
     }
 }
