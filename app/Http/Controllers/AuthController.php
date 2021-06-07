@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\User;
+use App\Http\Requests\CreateUserRequest;
+use Illuminate\Support\Facades\Hash;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
     use AuthenticatesUsers;
 
@@ -23,6 +25,20 @@ class LoginController extends Controller
             return response()->json(['error' => 'could_not_create_token']. 500);
         }
 
-        return response()->json(compact('token'));
+        $user = User::where('email', $credentials['email'])->first();
+        $name = $user['name'];
+
+        return response()->json(compact('token', 'name'));
+    }
+
+    public function register(CreateUserRequest $request) {
+        $data = $request->validated();
+        $data['password'] = Hash::make($data['password']);
+
+        return User::create($data);
+    }
+
+    public function getUser($token) {
+        return response()->json(auth()->user());
     }
 }
