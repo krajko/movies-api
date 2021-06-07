@@ -19,6 +19,6 @@ class Movie extends Model
     ];
 
     public static function search($query) {
-        return Movie::where('title', 'like', $query)->get();
+        return Movie::latest()->where('title', 'like', $query)->get();
     }
 }

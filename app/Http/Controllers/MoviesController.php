@@ -11,15 +11,11 @@ use App\Http\Requests\UpdateMovieRequest;
 class MoviesController extends Controller
 {
     public function index(Request $request) {
-        $query = "%".$request->input('title')."%";
         $offset = $request->input('skip');
         $limit = $request->input('take');
+        $query = "%".$request->input('title')."%";
 
-        if ($query) {
-            return Movie::search($query)->skip($offset)->take($limit);
-        }
-
-        return Movie::all()->skip($offset)->take($limit);
+        return Movie::search($query)->skip($offset)->take($limit);
     }
 
     public function show($id) {
