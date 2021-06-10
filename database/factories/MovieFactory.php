@@ -21,13 +21,28 @@ class MovieFactory extends Factory
      */
     public function definition()
     {
+        $genres = [
+            'action',
+            'horror',
+            'drama',
+            'romance',
+            'comedy',
+            'sci-fi',
+            'thriller',
+            'fiction',
+            'western',
+            'animation',
+            'fantasy',
+            'superhero'
+        ];
+
         return [
             'title' => ucfirst($this->faker->words(rand(1, 5), true)),
             'director' => $this->faker->name(),
             'imageUrl' => "https://blog.hubspot.com/hubfs/Sales_Blog/famous-movie-quotes.jpg",
             'duration' => $this->faker->numberBetween(60, 300),
             'releaseDate' => $this->faker->date(),
-            'genre' =>  ucfirst($this->faker->word())
+            'genre' =>  ucfirst($genres[array_rand($genres)])
         ];
     }
 }

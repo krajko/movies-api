@@ -4,31 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\User;
 use App\Http\Requests\CreateUserRequest;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    use AuthenticatesUsers;
-
-    public function authenticate(Request $request) {
+    public function login(Request $request) {
         $credentials  = $request->only(['email', 'password']);
 
-        try {
-            if (!$token = \JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
-            }
-        } catch(JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token']. 500);
+        $token = auth('api')->attempt($credentials);
+
+        if (!$token) {
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        $user = User::where('email', $credentials['email'])->first();
-        $name = $user['name'];
+        $user = auth('api')->user();
 
-        return response()->json(compact('token', 'name'));
+        return response()->json(compact('token', 'user'));
+    }
+
+    public function logout() {
+        $result = auth('api')->logout();
+        return response()->json(['success' => true]);
     }
 
     public function register(CreateUserRequest $request) {
@@ -38,7 +36,12 @@ class AuthController extends Controller
         return User::create($data);
     }
 
-    public function getUser($token) {
-        return response()->json(auth()->user());
+    public function me() {
+        return auth('api')->user();
+    }
+
+    public function refreshToken() {
+        $token = auth('api')->refresh();
+        return ['token' => $token];
     }
 }
